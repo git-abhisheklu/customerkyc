@@ -18,8 +18,9 @@ import java.util.Date;
 public class Customer {
     @Id
     private Long id;
-    private String Name;
-    private Date DateOfBirth;
+    private String name;
+    private Date dateOfBirth;
     private Gender gender;
-    private String Address;
+    private String aadhaarNo;
+    private String address;
 }
