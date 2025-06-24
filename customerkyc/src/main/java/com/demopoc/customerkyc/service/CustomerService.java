@@ -8,6 +8,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,18 +21,37 @@ public class CustomerService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public ResponseEntity<?> generateOTP(String aadhaarNo)
-    {
-        String url="https://uat.paysprint.in/sprintverify-uat/api/v1/verification/aadhaar_verifyotp";
-        Map<String,String> requestBody=new HashMap<String,String>();
-        requestBody.put("aadhaar_no",aadhaarNo);
-        HttpHeaders httpHeaders=new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        httpHeaders.set("Authorization", "Bearer TVRJek5EVTJOelUwTnpKRFQxSlFNREF3TURFPQ==");
-        HttpEntity httpEntity=new HttpEntity(requestBody,httpHeaders);
-        var customer= restTemplate.exchange(url, HttpMethod.POST,httpEntity,Customer.class);
-        return customer;
+    public ResponseEntity<String> generateOTP(String aadhaarNo) {
+        String url = "https://uat.paysprint.in/sprintverify-uat/api/v1/verification/telecom/sendotp";
+
+        // Request Body
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("aadhaar_no", aadhaarNo);  // Or "id_number" depending on API
+
+        // Headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJUb2tlbkdlbmVyYXRpb24iLCJ0aW1lc3RhbXAiOjE3NTA3NzAyMjcsInBhcnRuZXJJZCI6IkNPUlAwMDAwMjA5MyIsInByb2R1Y3QiOiJXQUxMRVQiLCJyZXFpZCI6MTEyMzk3MzA2LCJpYXQiOjE3NTA3NzAyMjcsImV4cCI6MTc1MDc3MzgyN30.qm40i-kcvevaghJhI3f3frH9cO50p_XXxegAnywU92o");
+        headers.set("authorisedkey", "TVRJek5EVTJOelUwTnpKRFQxSlFNREF3TURFPQ==");
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+        HttpEntity<Map<String, String>> entity = new HttpEntity<>(requestBody, headers);
+
+        // Make the request (String.class for raw response or define your DTO)
+        ResponseEntity<String> response = restTemplate.exchange(
+                url,
+                HttpMethod.POST,
+                entity,
+                String.class
+        );
+
+        return response;
     }
+
+
+
+//    TVRJek5EVTJOelUwTnpKRFQxSlFNREF3TURFPQ==    --> OTP validation
+
 
 //    public ResponseEntity<Customer> verifyOTP( String validOTP)
 //    {
