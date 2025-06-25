@@ -2,6 +2,7 @@ package com.demopoc.customerkyc.service;
 
 import com.demopoc.customerkyc.domain.dto.response.CustomerResponseDTO;
 import com.demopoc.customerkyc.entity.Customer;
+import com.demopoc.customerkyc.jwt.JwtUtil;
 import com.demopoc.customerkyc.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -20,6 +21,9 @@ public class CustomerService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     public ResponseEntity<String> generateOTP(String aadhaarNo) {
         String url = "https://uat.paysprint.in/sprintverify-uat/api/v1/verification/telecom/sendotp";
