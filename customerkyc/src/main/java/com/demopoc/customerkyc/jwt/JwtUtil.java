@@ -13,20 +13,14 @@ import java.util.Base64;
 @Component
 public class JwtUtil {
 
-//    @Value("${jwt.secret}")
-//    private String secret;
-//
-//    @Value("${jwt.partnerId}")
-//    private String partnerId;
-
     private static int getRandom() {
         int random = (int) Math.round(Math.random() * 1000000000);
         return random;
     }
 
     private static long getTimestamp() {
-//        long timestamp = Instant.now().getEpochSecond();
-        return 300;
+        long timestamp = Instant.now().getEpochSecond();
+        return timestamp;
     }
 
     public static String generateToken() {
@@ -42,7 +36,7 @@ public class JwtUtil {
                 .claim("timestamp", timestamp)
                 .claim("partnerId", "CORP00001")
                 .claim("product", "WALLET")
-                .claim("reqid", random) // Random request no
+                .claim("reqid", random)
                 .signWith(io.jsonwebtoken.SignatureAlgorithm.HS256, secretKey)
                 .compact();
 
