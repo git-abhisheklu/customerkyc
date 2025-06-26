@@ -5,14 +5,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerResponseDTO {
-    private String Name;
-    private Date DateOfBirth;
-    private Gender gender;
-    private String Address;
+    private int statuscode;
+    private boolean status;
+    private String message;
+    private DataDTO data;
+
+    @Data
+    public static class DataDTO {
+        private String client_id;
+        private boolean otp_sent;
+        private boolean if_number;
+        private boolean valid_aadhaar;
+    }
 }

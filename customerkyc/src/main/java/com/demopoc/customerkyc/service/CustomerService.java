@@ -23,7 +23,7 @@ public class CustomerService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public ResponseEntity<?> generateOTP(String aadhaarNo) {
+    public CustomerResponseDTO generateOTP(String aadhaarNo) {
         String url = "https://uat.paysprint.in/sprintverify-uat/api/v1/verification/aadhaar_sendotp";
 
         Map<String, String> requestBody = new HashMap<>();
@@ -37,15 +37,14 @@ public class CustomerService {
 
         HttpEntity<Map<String, String>> entity = new HttpEntity<>(requestBody, headers);
 
-        // Make the request (String.class for raw response or define your DTO)
-        ResponseEntity<?> response = restTemplate.exchange(
+        ResponseEntity<CustomerResponseDTO> response = restTemplate.exchange(
                 url,
                 HttpMethod.POST,
                 entity,
-                String.class
+                CustomerResponseDTO.class
         );
 
-        return response;
+        return response.getBody();
     }
 
 

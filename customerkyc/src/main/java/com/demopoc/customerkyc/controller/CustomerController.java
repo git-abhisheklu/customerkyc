@@ -16,8 +16,8 @@ public class CustomerController {
     private CustomerService customerService;
 
     @PostMapping("/generate-otp")
-    public ResponseEntity<?> generateOTP(@RequestBody String aadhaarNo){
-        ResponseEntity<?> customerResponseDTO= customerService.generateOTP(aadhaarNo);
+    public ResponseEntity<CustomerResponseDTO> generateOTP(@RequestBody String aadhaarNo){
+        CustomerResponseDTO customerResponseDTO= customerService.generateOTP(aadhaarNo);
         return ResponseEntity.ok(customerResponseDTO);
     }
 }
