@@ -23,8 +23,8 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    @Autowired
-    private RestTemplate restTemplate;
+
+    private RestTemplate restTemplate = new RestTemplate();
 
 
 
@@ -38,7 +38,7 @@ public class CustomerService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         headers.set("Authorisedkey", "TVRJek5EVTJOelUwTnpKRFQxSlFNREF3TURFPQ=="); // Example custom header
         headers.set("Token", JwtUtil.generateToken()); // If needed
 
@@ -46,22 +46,22 @@ public class CustomerService {
         System.out.println("Aadhaar no. request body"+ requestBody);
 
         //TODO: add interceptors or Encoder Decoder to check Requestbody before sending it through client
-        ResponseEntity<Root> response = restTemplate.exchange(
+        ResponseEntity<Root> response = restTemplate.postForEntity(
                 url,
-                HttpMethod.POST,
                 entity,
                 Root.class
         );
-        ResponseEntity<String> response2 = restTemplate.exchange(
-                url,
-                HttpMethod.POST,
-                entity,
-                String.class
-        );
-
-        return response.getStatusCode() == HttpStatus.OK ?
-                response.getBody() :
-                objectMapper.readValue(response2.getBody(), Root.class);
+//        ResponseEntity<String> response2 = restTemplate.exchange(
+//                url,
+//                HttpMethod.POST,
+//                entity,
+//                String.class
+//        );
+//
+//        return response.getStatusCode() == HttpStatus.OK ?
+//                response.getBody() :
+//                objectMapper.readValue(response2.getBody(), Root.class);
+        return response.getBody();
     }
 
 

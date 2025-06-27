@@ -1,9 +1,11 @@
 package com.demopoc.customerkyc.jwt;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import java.time.Instant;
 import java.util.Base64;
 
+@Slf4j
 @Component
 public class JwtUtil {
 
@@ -18,18 +20,15 @@ public class JwtUtil {
     }
 
     public static String generateToken() {
-        int random = getRandom();
+        int random = 123;//getRandom();
         long timestamp = getTimestamp();
+        log.info("random {}",random);
+        log.info("timestamp {}",timestamp);
         String rawSecret = "UTA5U1VEQXdNREF4VFZSSmVrNUVWVEpPZWxVd1RuYzlQUT09";
         String secretKey = Base64.getEncoder().encodeToString(rawSecret.getBytes());
         String token = io.jsonwebtoken.Jwts.builder()
-                .setIssuer("PSPRINT")
-                .setHeaderParam("typ", "JWT")
-                .setHeaderParam("alg", "HS256")
-                .claim("iss", "PSPRINT")
                 .claim("timestamp", timestamp)
                 .claim("partnerId", "CORP00001")
-                .claim("product", "WALLET")
                 .claim("reqid", random)
                 .signWith(io.jsonwebtoken.SignatureAlgorithm.HS256, secretKey)
                 .compact();
