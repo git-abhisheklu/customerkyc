@@ -10,16 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerResponseDTO {
-    private int statuscode;
-    private boolean status;
-    private String message;
-    private DataDTO data;
 
-    @Data
-    public static class DataDTO {
         private String client_id;
         private boolean otp_sent;
         private boolean if_number;
         private boolean valid_aadhaar;
-    }
 }

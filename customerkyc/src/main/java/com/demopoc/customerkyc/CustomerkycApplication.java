@@ -24,4 +24,6 @@ public class CustomerkycApplication {
 	public RestTemplate restTemplate(){
 		return new RestTemplate();
 	}
+
+
 }
